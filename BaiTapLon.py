@@ -14,7 +14,7 @@ driver.get("https://alonhadat.com.vn/nha-dat/can-ban/biet-thu-nha-lien-ke/3/da-n
 if os.path.exists("alonhadat.csv"):
     os.remove("alonhadat.csv")
 
-# Tạo file CSV mới và chuẩn bị viết dữ liệu
+# Tạo file CSV mới 
 with open("alonhadat.csv", "w", newline="", encoding="utf-8-sig") as f:
     writer = csv.writer(f)
     # Ghi tiêu đề cột vào file CSV
@@ -22,7 +22,7 @@ with open("alonhadat.csv", "w", newline="", encoding="utf-8-sig") as f:
 
     page = 1  # Biến đếm số trang hiện tại
     while True:
-        print(f"Đang xử lý trang {page}...")
+        print(f"Đang lấy dữ liệu {page}...")
 
         try:
             # Chờ cho đến khi tất cả các bài viết trên trang hiện tại được tải xong
@@ -49,14 +49,14 @@ with open("alonhadat.csv", "w", newline="", encoding="utf-8-sig") as f:
                 # Nếu tìm thấy nút ">>", click vào nó để chuyển sang trang kế tiếp
                 next_links[0].click()
                 page += 1  # Tăng số trang
-                time.sleep(2)  # Chờ 2 giây để trang tải xong
+                time.sleep(3)  # Chờ 2 giây để trang tải xong
             else:
                 # Nếu không tìm thấy nút ">>", tức là đã đến trang cuối
                 print("Đã đến trang cuối.")
                 break  # Dừng vòng lặp
 
         except Exception as e:
-            # Xử lý lỗi nếu có sự cố trong khi lấy dữ liệu hoặc chuyển trang
+            # Xử lý lỗi nếu có sự cố trong khi lấy dữ liệu hoặc chuyển trang(thường bị lỗi do gặp capcha)
             print(f"Lỗi khi xử lý trang {page}: {e}")
             break  # Dừng vòng lặp nếu có lỗi
 
